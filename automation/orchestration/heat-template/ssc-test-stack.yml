@@ -16,19 +16,19 @@ parameters:
     type: string
     label: Image name or ID
     description: Image to be used for compute instance
-    default: 40e1794e-6471-4c9b-9327-2b762ca0c135
+    default: Ubuntu 16.04 LTS (Xenial Xerus) - latest
 
   flavor:
     type: string
     label: Flavor
     description: Type of instance (flavor) to be used
-    default: ACCHT18.normal
+    default: ssc.small
 
   key:
     type: string
     label: Key name
     description: Name of key-pair to be used for compute instance
-    default: <—MY_KEY_NAME->
+    default: Win10AdIn
 
   public_network:
     type: string
@@ -41,7 +41,7 @@ resources:
   cluster_sg:
     type: OS::Neutron::SecurityGroup
     properties:
-      name: cluster_sg
+      name: cluster_sg_adin
       rules:
         - protocol: icmp
         - protocol: tcp
@@ -100,7 +100,7 @@ resources:
       user_data: |
         #!/bin/sh
         echo "Hello, World!"
-        echo "<ADD-CLUSTER’s-PUBLIC-KEY>" >> /home/ubuntu/.ssh/authorized_keys
+        echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Go6URYPABPQjXIDEwle8n4duTERcg8r+m9nzjbniJHb1ySJV3xpUtG+ZqBvOdbehWpY9slYFmTEHhhHxYuBG6qEkRkZEUAnaBgfczXwP5KskO5sc2Rpnk/PIIyUT1Yr7U8XpkuKI0Hie0tp8WebRv6nLlfS0lVBBhSlGayFNu74ekSJoQrxfAgMijURpEarhqt8zpR3qNb88uW7X0NoHWHXqYV81NmQMjOG/7RqSZaLptTtVjuubKVqOD8RPgydIGjpHmZC7o5mh6/gr1RrPjbavM/yWbOucrucvIws2/Q80EY87SV7CfQxfKJ4dp0k13RlKWUGFhSe1AMu/KmWn root@adin-assigment2" >> /home/ubuntu/.ssh/authorized_keys
         apt-add-repository -y ppa:ansible/ansible
         apt-get update -y
         apt-get upgrade -y
@@ -120,7 +120,7 @@ resources:
       user_data: |
         #!/bin/sh
         echo "Hello, World!"
-        echo "<ADD-CLUSTER’s-PUBLIC-KEY>" >> /home/ubuntu/.ssh/authorized_keys
+        echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Go6URYPABPQjXIDEwle8n4duTERcg8r+m9nzjbniJHb1ySJV3xpUtG+ZqBvOdbehWpY9slYFmTEHhhHxYuBG6qEkRkZEUAnaBgfczXwP5KskO5sc2Rpnk/PIIyUT1Yr7U8XpkuKI0Hie0tp8WebRv6nLlfS0lVBBhSlGayFNu74ekSJoQrxfAgMijURpEarhqt8zpR3qNb88uW7X0NoHWHXqYV81NmQMjOG/7RqSZaLptTtVjuubKVqOD8RPgydIGjpHmZC7o5mh6/gr1RrPjbavM/yWbOucrucvIws2/Q80EY87SV7CfQxfKJ4dp0k13RlKWUGFhSe1AMu/KmWn root@adin-assigment2" /home/ubuntu/.ssh/authorized_keys
         apt-get update -y
         apt-get upgrade -y
       user_data_format: RAW
