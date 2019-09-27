@@ -1,6 +1,7 @@
 # http://docs.openstack.org/developer/python-novaclient/ref/v2/servers.html
 import time, os, sys
 import inspect
+import datetime
 from os import environ as env
 
 from  novaclient import client
@@ -8,11 +9,12 @@ import keystoneclient.v3.client as ksclient
 from keystoneauth1 import loading
 from keystoneauth1 import session
 
-flavor = "ACCHT18.normal" 
-private_net = None
-floating_ip_pool_name = None
-floating_ip = None
-image_name = None
+name = "adinInstance" + datetime.datetime.today().strftime('%Y-%m-%d--%H-%M-%S')
+flavor = "ssc.small" 
+private_net = "SNIC 2019/10-32 Internal IPv4 Network"
+floating_ip_pool_name = "Public External IPv4 network"
+floating_ip = "130.238.28.157"
+image_name = "Ubuntu 16.04 LTS (Xenial Xerus) - latest"
 
 loader = loading.get_plugin_loader('password')
 
@@ -49,7 +51,7 @@ else:
 secgroups = ['default']
 
 print "Creating instance ... "
-instance = nova.servers.create(name="vm1", image=image, flavor=flavor, userdata=userdata, nics=nics,security_groups=secgroups)
+instance = nova.servers.create(name=name, image=image, flavor=flavor, userdata=userdata, nics=nics,security_groups=secgroups, key_name="Win10AdIn")
 inst_status = instance.status
 print "waiting for 10 seconds.. "
 time.sleep(10)
