@@ -1,0 +1,13 @@
+#cloud-config
+
+byobu_default: system 
+
+runcmd:
+ - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+ - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+ - apt update
+ - apt install -y docker-ce
+ - git clone https://github.com/SNICSienceCloud/technical-training ~/technical-training
+ - ufw allow 5000
+ - docker build -t cowsay:latest ~/technical-training/automation/container
+ - docker run -it cowsay
