@@ -2,12 +2,19 @@
 
 byobu_default: system 
 
+write_files:
+ - path: /etc/docker/daemon.json
+   content: |
+     {
+     "mtu": 1400
+     }
+
 runcmd:
  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
  - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
  - apt update
  - apt install -y docker-ce
- - git clone https://github.com/SNICSienceCloud/technical-training ~/technical-training
+ - git clone https://github.com/SNICScienceCloud/technical-training ~/technical-training
  - ufw allow 5000
  - docker build -t cowsay:latest ~/technical-training/automation/container
- - docker run -it cowsay
+ - docker run -d -p 5000:5000  cowsay
